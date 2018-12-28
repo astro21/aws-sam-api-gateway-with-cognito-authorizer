@@ -28,22 +28,28 @@ Here is the how you can test the template on your side:
 
 3. Open the terminal and go to the unzipped folder
 
-	cd sam-app
+```bash
+cd sam-app
+```
 
 4. Build the application
 
+```bash
   sam build --use-container
+```
 
 5. Package the application
-
+```bash
 	sam package \
 
     --output-template-file packaged.yaml \
 
     --s3-bucket <your-s3-bucket-name>
+```
 
 6. Deploy the application
 
+```bash
 	sam deploy \
 
     --template-file packaged.yaml \
@@ -53,7 +59,7 @@ Here is the how you can test the template on your side:
     --capabilities CAPABILITY_IAM \
 
     --region us-east-1
-
+```
 
 --region should be the same as the region of your S3 bucket
 
