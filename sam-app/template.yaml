@@ -58,7 +58,7 @@ Resources:
             DefaultAuthorizer: MyCognitoAuth # OPTIONAL
             Authorizers:
               MyCognitoAuth:
-                UserPoolArn: arn:aws:cognito-idp:us-east-2:<your-aws-account>:userpool/us-east-2_vUJjKdm26 # Can also accept an array
+                UserPoolArn: arn:aws:cognito-idp:us-east-2:<your-aws-account>:userpool/<your-user-pool-id> # Can also accept an array
                 Identity: # OPTIONAL
                   Header: Authorization # OPTIONAL; Default: 'Authorization'
 
