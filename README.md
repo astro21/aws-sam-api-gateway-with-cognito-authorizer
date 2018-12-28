@@ -6,9 +6,7 @@ An AWS SAM template which creates an API Gateway API with Cognito authorizer and
 ## Requirements
 
 * AWS CLI already configured with at least PowerUser permission
-* [Python 3 installed](https://www.python.org/downloads/)
-* [Docker installed](https://www.docker.com/community-edition)
-* [Python Virtual Environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
+* [AWS SAM CLI installed](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 
 ## Setup process
 
