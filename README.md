@@ -1,0 +1,1 @@
+# aws-sam-api-gateway-with-cognito-authorizer
