@@ -3,6 +3,15 @@
 An AWS SAM template which creates an API Gateway API with Cognito authorizer and a Lambda function
 
 
+## Requirements
+
+* AWS CLI already configured with at least PowerUser permission
+* [Python 3 installed](https://www.python.org/downloads/)
+* [Docker installed](https://www.docker.com/community-edition)
+* [Python Virtual Environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
+
+## Setup process
+
 Here is the how you can test the template on your side:
 
 1. Download the sam-app.zip file and unzip it
