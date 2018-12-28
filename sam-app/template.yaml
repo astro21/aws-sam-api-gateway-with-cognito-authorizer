@@ -1,0 +1,77 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    sam-app
+
+    Sample SAM Template for sam-app
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 3
+
+
+Resources:
+    HelloWorldFunction:
+        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+        Properties:
+            AutoPublishAlias: test
+            FunctionName: HelloWorldFunction
+            CodeUri: hello_world/
+            Handler: app.lambda_handler
+            Runtime: python3.6
+            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+                Variables:
+                    PARAM1: VALUE
+            Events:
+                ApiEvent:
+                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+                    Properties:
+                        Path: /hello
+                        Method: get
+                        RestApiId: !Ref ApiGatewayApi
+                        Auth:
+                          Authorizer: MyCognitoAuth # OPTIONAL
+    ApiGatewayApi:
+        Type: AWS::Serverless::Api
+        Properties:
+          DefinitionBody:
+            info:
+              version: "2018-12-27T19:28:53Z"
+              title: "simpleGet"
+            basePath: /Prod
+            paths:
+              /hello:
+                get:
+                  response: {}
+                  x-amazon-apigateway-integration:
+                    httpMethod: POST
+                    passthroughBehavior: when_no_match
+                    type: aws_proxy
+                    uri: "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:<your-aws-account>:function:HelloWorldFunction:test/invocations"
+            schemes:
+            - https
+            swagger: "2.0"
+          Name: ApiGatewayApi
+          StageName: Prod
+          Auth:
+            DefaultAuthorizer: MyCognitoAuth # OPTIONAL
+            Authorizers:
+              MyCognitoAuth:
+                UserPoolArn: arn:aws:cognito-idp:us-east-2:<your-aws-account>:userpool/us-east-2_vUJjKdm26 # Can also accept an array
+                Identity: # OPTIONAL
+                  Header: Authorization # OPTIONAL; Default: 'Authorization'
+
+Outputs:
+
+    ApiGatewayApi:
+      Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+      Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+
+    HelloWorldFunction:
+      Description: "Hello World Lambda Function ARN"
+      Value: !GetAtt HelloWorldFunction.Arn
+
+    HelloWorldFunctionIamRole:
+      Description: "Implicit IAM Role created for Hello World function"
+      Value: !GetAtt HelloWorldFunctionRole.Arn
